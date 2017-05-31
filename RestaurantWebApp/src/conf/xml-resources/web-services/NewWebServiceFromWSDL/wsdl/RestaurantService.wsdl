@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+	xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
+	xmlns:tns="http://www.ttu.ee/idu0075/2017/ws/restaurant2" 
+	targetNamespace="http://www.ttu.ee/idu0075/2017/ws/restaurant2">
+	<wsdl:types>
+		<xs:schema  targetNamespace="http://www.ttu.ee/idu0075/2017/ws/restaurant2" elementFormDefault="qualified">
+			<xs:complexType name ="dishType">
+				<xs:sequence>
+					<xs:element name="id" type="xs:integer"/>
+					<xs:element name="name" type="xs:string"/>
+					<xs:element name="code" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name ="orderDishType">
+				<xs:sequence>
+					<xs:element name="dish" type="tns:dishType"/>
+					<xs:element name="amount" type="xs:integer"/>
+					<xs:element name="dishPrice" type="xs:double"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name ="orderDishListType">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="orderDish" type="tns:orderDishType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name ="orderType">
+				<xs:sequence>
+					<xs:element name="id" type="xs:integer"/>
+					<xs:element name="orderNo" type="xs:string"/>
+					<xs:element name="orderDate" type="xs:date"/>
+                    <xs:element name="orderTime" type="xs:time"/>
+					<xs:element name="paidTime" type="xs:time"/>
+					<xs:element name="customerName" type="xs:string"/>
+					<xs:element name="checkTotal" type="xs:double"/>
+					<xs:element name="orderDishList" type="tns:orderDishListType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="getDishRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="id" type="xs:integer"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getDishResponse" type="tns:dishType"/>
+			<xs:element name="addDishRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="name" type="xs:string"/>
+						<xs:element name="code" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="addDishResponse" type="tns:dishType"/>
+			<xs:element name="getDishListRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getDishListResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="unbounded" name="dish" type="tns:dishType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getOrderRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="id" type="xs:integer"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getOrderResponse" type="tns:orderType"/>
+			<xs:element name="addOrderRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="orderNo" type="xs:string"/>
+						<xs:element name="orderDate" type="xs:date"/>
+                        <xs:element name="orderTime" type="xs:time"/>
+                        <xs:element name="paidTime" type="xs:time"/>
+						<xs:element name="customerName" type="xs:string"/>
+                        <xs:element name="checkTotal" type="xs:double"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="addOrderResponse" type="tns:orderType"/>
+			<xs:element name="getOrderListRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="startDate" type="xs:date"/>
+						<xs:element name="endDate" type="xs:date"/>
+						<xs:element minOccurs="0" name="maxCheckTotal">
+						  <xs:simpleType>
+							<xs:restriction base="xs:double">
+							  <xs:minInclusive value="5"/>
+							</xs:restriction>
+						  </xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getOrderListResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="unbounded" name="order" type="tns:orderType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getOrderDishListRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="orderId" type="xs:integer"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getOrderDishListResponse" type="tns:orderDishListType"/>
+			<xs:element name="addOrderDishRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="orderId" type="xs:integer"/>
+						<xs:element name="dishId" type="xs:integer"/>
+						<xs:element name="amount" type="xs:integer"/>
+						<xs:element name="dishPrice" type="xs:double"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="addOrderDishResponse" type="tns:orderDishType"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="getDishMessageRequest">
+		<wsdl:part name="parameter" element="tns:getDishRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getDishMessageResponse">
+		<wsdl:part name="parameter" element="tns:getDishResponse"/>
+	</wsdl:message>
+	<wsdl:message name="addDishMessageRequest">
+		<wsdl:part name="parameter" element="tns:addDishRequest"/>
+	</wsdl:message>
+	<wsdl:message name="addDishMessageResponse">
+		<wsdl:part name="parameter" element="tns:addDishResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getDishListMessageRequest">
+		<wsdl:part name="parameter" element="tns:getDishListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getDishListMessageResponse">
+		<wsdl:part name="parameter" element="tns:getDishListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getOrderMessageRequest">
+		<wsdl:part name="parameter" element="tns:getOrderRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getOrderMessageResponse">
+		<wsdl:part name="parameter" element="tns:getOrderResponse"/>
+	</wsdl:message>
+	<wsdl:message name="addOrderMessageRequest">
+		<wsdl:part name="parameter" element="tns:addOrderRequest"/>
+	</wsdl:message>
+	<wsdl:message name="addOrderMessageResponse">
+		<wsdl:part name="parameter" element="tns:addOrderResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getOrderListMessageRequest">
+		<wsdl:part name="parameter" element="tns:getOrderListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getOrderListMessageResponse">
+		<wsdl:part name="parameter" element="tns:getOrderListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getOrderDishListMessageRequest">
+		<wsdl:part name="parameter" element="tns:getOrderDishListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getOrderDishListMessageResponse">
+		<wsdl:part name="parameter" element="tns:getOrderDishListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="addOrderDishMessageRequest">
+		<wsdl:part name="parameter" element="tns:addOrderDishRequest"/>
+	</wsdl:message>
+	<wsdl:message name="addOrderDishMessageResponse">
+		<wsdl:part name="parameter" element="tns:addOrderDishResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="OrderPortType">
+		<wsdl:operation name="getDish">
+			<wsdl:input message="tns:getDishMessageRequest"/>
+			<wsdl:output message="tns:getDishMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addDish">
+			<wsdl:input message="tns:addDishMessageRequest"/>
+			<wsdl:output message="tns:addDishMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getDishList">
+			<wsdl:input message="tns:getDishListMessageRequest"/>
+			<wsdl:output message="tns:getDishListMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getOrder">
+			<wsdl:input message="tns:getOrderMessageRequest"/>
+			<wsdl:output message="tns:getOrderMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addOrder">
+			<wsdl:input message="tns:addOrderMessageRequest"/>
+			<wsdl:output message="tns:addOrderMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getOrderList">
+			<wsdl:input message="tns:getOrderListMessageRequest"/>
+			<wsdl:output message="tns:getOrderListMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getOrderDishList">
+			<wsdl:input message="tns:getOrderDishListMessageRequest"/>
+			<wsdl:output message="tns:getOrderDishListMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addOrderDish">
+			<wsdl:input message="tns:addOrderDishMessageRequest"/>
+			<wsdl:output message="tns:addOrderDishMessageResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="OrderBinding" type="tns:OrderPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getDish">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addDish">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getDishList">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>	
+		<wsdl:operation name="getOrder">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addOrder">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getOrderList">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>	
+		<wsdl:operation name="getOrderDishList">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addOrderDish">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="RestaurantService">
+		<wsdl:port name="OrderPort" binding="tns:OrderBinding">
+			<soap:address location="Empty"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

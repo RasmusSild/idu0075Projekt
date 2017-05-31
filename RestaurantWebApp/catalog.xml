@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/C:/Users/HP/Documents/kool/current/Veebiteenused/Projekt/myproject/RestaurantService.wsdl" uri="../restaurantWebApp/src/conf/xml-resources/web-services/NewWebServiceFromWSDL/wsdl/RestaurantService.wsdl"/>
+</catalog>
